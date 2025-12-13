@@ -1,5 +1,5 @@
 import Project from "./projects";
-
+import saveToLocalStorage from "./saveProjects";
 export default class CreateToDo {
   constructor(title, description, dueDate, priority, notes, checkLists, projectId = 1) {
     this.title = title;
@@ -10,6 +10,7 @@ export default class CreateToDo {
     this.checkLists = checkLists;
     this.id = crypto.randomUUID();
     this.projectId = projectId;
-    Project.addToDoToProject(projectId, this)
+    Project.addToDoToProject(projectId, this);
+    saveToLocalStorage();
   }
 }
