@@ -1,14 +1,7 @@
-import findProject from "./findProject";
-import Project from "./projects";
-import findToDo from './findToDo'
+import find from "./find";
+
 export default function deleteToDo(projectId, toDoId) {
-  // get the projects array
-  const projects = Project.getProjects();
-  // get the specific project
-  const project = projects[findProject(projectId)];
-  // find the toDo index
-  const toDoIndex = findToDo(project.list, toDoId);
-  // remove the toDo from the project
+  const {project, toDoIndex} = find(projectId, toDoId);
   project.list.splice(toDoIndex, 1);
-  console.log('deleted')
-}
+  console.log('deleted');
+} 
