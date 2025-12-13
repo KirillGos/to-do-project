@@ -5,5 +5,5 @@ export default function findToDo(toDoList, toDoId) {
       index = i;
     }
   });
-  return i;
+  return index;
 }
