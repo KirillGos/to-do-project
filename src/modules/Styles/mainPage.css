@@ -1,0 +1,76 @@
+body {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 1fr 2fr;
+}
+
+#main-content {
+  padding: 35px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+#project-title {
+  margin: 10px !important;
+}
+
+#display-project {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+#project-title {
+  display: flex;
+  justify-content: space-between;
+}
+#project-todos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 0.5px solid red;
+  padding: 10px;
+  width: fit-content;
+  border-radius: 15px;
+}
+#default-content {
+  display: flex;
+  flex-direction: column;
+}
+#project-todos-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+#today-title {
+  align-self: center;
+}
+
+.project-checklist-item {
+  display: flex;
+  gap: 5px;
+  justify-items: center;
+}
+
+#project-checklists {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#project-checklists-title,
+#project-todos-wrapper-title,
+i {
+  font-size: 1.3rem !important;
+}
+
+#projects-checklist-items-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.project-todo-project {
+    color: rgba(0, 0, 0, 0.539);
+    font-size: 0.8rem;
+}
