@@ -1,0 +1,14 @@
+#display-todo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#todo-title {
+  font-size: 18px;
+}
+
+#todo-description,
+#todo-notes {
+  font-weight: lighter;
+  font-size: 16px;
+}

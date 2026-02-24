@@ -1,0 +1,32 @@
+export const createTaskTemplate = `
+<div id="create-task-table">
+     <div id="create-task-header">
+            <h1>Create a Task</h1>
+        </div>
+        <div id="create-task-name">
+            <input id="create-task-name-input" type="text" placeholder="enter task name">
+        </div>
+        <div id="create-task-description">
+            <h1>Enter task description</h1>
+            <input id="create-task-description-input" type="textarea" placeholder="enter task description">
+        </div>
+        <div id="create-task-checklist">
+
+        </div>
+        <div id="create-project-duedate">
+            <h1>Enter Due Date</h1>
+            <input type="date" id="project-duedate-input" >
+        </div>
+        <div id="task-priority">
+            <h1>Select Task Priority</h1>
+            <select name="choice" id="create-task-select">
+            <option value="high">🔴High Priority</option>
+            <option value="medium">🟢Meidum Priority</option>
+            <option value="low">🟡Low Priority</option>
+            </select>
+            </div>
+        <div>
+            <button id="add-task-btn" type="text">Add</button>
+        </div>
+</div>
+`;

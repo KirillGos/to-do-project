@@ -1,9 +1,8 @@
 import Project from "./projects";
 import CreateToDo from "./todo";
 import deleteToDo from "./deleteToDo";
-import * as updateFunctions from './updateToDo';
-import {mainPage} from './DOM/mainPage';
-
+import * as updateFunctions from "./updateToDo";
+import { mainPage } from "./DOM/mainPage";
 
 export default function App() {
   // const Plans = new Project("Plans");
@@ -17,7 +16,7 @@ export default function App() {
   // updateFunctions.editToDoPriority(Plans.id, toDo.id, "Changed")
   // updateFunctions.editToDoTitle(Plans.id, toDo.id, "Changed")
   // updateFunctions.editToDoDueDate(Plans.id, toDo.id, "Changed")
-    
+
   // const fun = new Project('Fun');
   // new CreateToDo('Test', "", "", "","", "", fun.id)
   // new CreateToDo('Test12', "", "", "","", "", fun.id)
@@ -25,8 +24,6 @@ export default function App() {
   // new CreateToDo('Test4', "", "", "","", "", fun.id)
   // new CreateToDo('Test5', "", "", "","", "", fun.id)
   // new CreateToDo("defualt");
-  // console.log(Project.getProjects()); 
+  // console.log(Project.getProjects());
   mainPage();
-
 }
-

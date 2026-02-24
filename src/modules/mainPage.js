@@ -7,5 +7,4 @@ function createMainPage() {
 
     const mainContent = document.createElement('div');
     mainContent.classList.add('main-content');
-
 }

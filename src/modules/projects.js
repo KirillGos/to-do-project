@@ -5,8 +5,10 @@ import saveToLocalStorage from './saveProjects';
 export default class Project  {
   static #projects = setData();
   
-  constructor(title) {
+  constructor(title, date, priority) {
     this.title = title;
+    this.date = date;
+    this.priority = priority;
     this.id = crypto.randomUUID();
     this.list = [];
     Project.#projects.push(this);
@@ -42,5 +44,5 @@ function setData() {
   if(localStorage.projects !== undefined) {
     return JSON.parse(localStorage.projects)
   } 
-  return [{title: "Default", id: 1, list: []}];
+  return [{title: "Default", id: "1", priority: "medium", date: "12/12/2023", list: []}];
 }

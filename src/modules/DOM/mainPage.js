@@ -1,86 +1,48 @@
 import "../Styles/mainPage.css";
 import "../Styles/sidebar.css";
 import "../Styles/search.css";
-
-export function mainPage() {
-  document.body.append(sideBar(), mainContent());
-}
+import "../Styles/todo.css";
+import {displayProject} from './createProject';
+import {createProjectDom} from './createProject';
+import {createTaskTemplate} from "./creeateTask"
 
 const sideBarTemplate = `
-    <div id="sidebar-utility">
+<div id="sidebar-utility">
         <div id="sidebar-toggle">
             ⬅
-        </div>
-        <div id="sidebar-create-todo">
+            </div>
+            <div id="sidebar-create-todo" class="effect1">
             <span id="sidebar-create-todo-icon">➕</span>
             <span id="sidebar-create-todo-label">Create Task</span>
-        </div>
-        <div id="sidebar-today">
+            </div>
+
+            <div id="sidebar-today" class="effect1">
             <span id="sidebar-today-icon">⭐</span>
             <span id="sidebar-taday-label">Today</span>
         </div>
 
-        <div id="sidebar-search">
+        <div id="sidebar-search" " class="effect1">
             <span id= "sidebar-search-icon">🔍</span>
             <span id="sidebar-search-label">Search</span>
-        </div>
+            </div>
 
-        <div id="sidebar-upcoming">
-            <span id="sidebar-upcoming-icon">🧮</span>
+        <div id="sidebar-upcoming" class="effect1"    >
+        <span id="sidebar-upcoming-icon">🧮</span>
             <span id="sidebar-upcoming-label">Upcoming</span>
         </div>
     </div>
     
       
- <div id="sidebar-projects">
-        <div class="sidebar-project-item">
-            <div class="sidebar-project-title">Studying</div>
-            <div class="sidebar-project-tasks">
-                <div class="sidebar-todo-task">
-                    <span class="sidebar-todo-priority">🟣</span>
-                    <span class="sidebar-todo-title">Study C</span>
-                </div>
-                <div class="sidebar-todo-task">
-                    <span class="sidebar-todo-priority">🟣</span>
-                    <span class="sidebar-todo-title">Study For Finals</span>
-                </div>
-                <div class="sidebar-todo-task">
-                    <span class="sidebar-todo-priority">🟣</span>
-                    <span class="sidebar-todo-title">Finish the Project</span>
-                </div>
-             </div>
-
-        </div>
-        <div class="sidebar-project-item">
-            <div class="sidebar-project-title">Studying2</div>
-            <div class="sidebar-project-tasks">
-                <div class="sidebar-todo-task">
-                    <span class="sidebar-todo-priority">🟣</span>
-                    <span class="sidebar-todo-title">Study C</span>
-                </div>
-                <div class="sidebar-todo-task">
-                    <span class="sidebar-todo-priority">🟣</span>
-                    <span class="sidebar-todo-title">Study For Finals</span>
-                </div>
-                <div class="sidebar-todo-task">
-                    <span class="sidebar-todo-priority">🟣</span>
-                    <span class="sidebar-todo-title">Finish the Project</span>
-                </div>
-             </div>
-
-        </div>
-
-    </div>
+ <div id="sidebar-projects"></div>
     
-
     <div id="sidebar-bottom">
-        <div id="add-new-project">
-            <span class="add-new-project-icon">+</span>
+        <div id="add-new-project" class="effect1">
+        <span class="add-new-project-icon">+</span>
             <span class="add-new-project-label">New Project</span>
-        </div>
+            </div>
     </div>
     </div>
-`;
+    `;
 const defaultMainContentTemplate = `
   <div id="default-content">
         <div id="today-title">Today</div>
@@ -94,7 +56,17 @@ const defaultMainContentTemplate = `
                 <span class="today-todo-title">Finish Course</span>
                 <span class="today-todo-project">Programming</span>
                 <span class="today-due-date"></span>
-            </div>
+                </div>
+                <div class="todo-task">
+                <span class="today-todo-title">Finish Course</span>
+                <span class="today-todo-project">Programming</span>
+                <span class="today-due-date"></span>
+                </div>
+            <div class="todo-task">
+            <span class="today-todo-title">Finish Course</span>
+                <span class="today-todo-project">Programming</span>
+                <span class="today-due-date"></span>
+                </div>
             <div class="todo-task">
                 <span class="today-todo-title">Finish Course</span>
                 <span class="today-todo-project">Programming</span>
@@ -105,74 +77,10 @@ const defaultMainContentTemplate = `
                 <span class="today-todo-project">Programming</span>
                 <span class="today-due-date"></span>
             </div>
-            <div class="todo-task">
-                <span class="today-todo-title">Finish Course</span>
-                <span class="today-todo-project">Programming</span>
-                <span class="today-due-date"></span>
             </div>
-            <div class="todo-task">
-                <span class="today-todo-title">Finish Course</span>
-                <span class="today-todo-project">Programming</span>
-                <span class="today-due-date"></span>
-            </div>
-        </div>
     </div>
 `;
-const displayProjectTempalte = `    
-    <div id="project-title">
-        <span>
-        <span class="display-project-priority">🟢</span>
-        <span class="display-project-title">Prepare Presentation</span>
-        </span>
-        <span id="display-project-duedate">12.12.2026</span>
-    </div>
-    <div id="display-project">
-        <div id="project-todos-wrapper">
-        <div id="project-todos-wrapper-title">
-        Todos In this <i> Prepare Presentation </i> Project
-        </div>
-        <div id="project-todos">
-                <div class="todo-task" id=""">
-                <span class="project-todo-title">Finish Course</span>
-                <div class="project-todo-project">Programming</div>
-                <span class="project-due-date"></span>
-            </div>
-             <div class="todo-task" id=""">
-                <span class="project-todo-title">Get a Job</span>
-                <div class="project-todo-project">Programming</div>
-                <span class="project-due-date"></span>
-            </div>
-             <div class="todo-task" id=""">
-                <span class="project-todo-title">Do an Interview</span>
-                <div class="project-todo-project">Programming</div>
-                <span class="project-due-date"></span>
-            </div>
-             </div>
-        </div>
-        <div id="project-checklists">
-            <div id="project-checklists-title">CheckList for Today</div>
-            <div id="projects-checklist-items-wrapper">
-                <div class="project-checklist-item">
-                <input type="checkbox">
-                <span class="project-checklist-item-title">Finish assignment</span>
-            </div>
-            <div class="project-checklist-item">
-                <input type="checkbox">
-                <span class="project-checklist-item-title">Workout</span>
-            </div>
-            <div class="project-checklist-item">
-                <input type="checkbox">
-                <span class="project-checklist-item-title">Buy Groceries</span>
-            </div>
-            <div class="project-checklist-item">
-                <input type="checkbox">
-                <span class="project-checklist-item-title">Respond</span>
-            </div>
 
-            </div>
-        </div>
-    </div>
-    `;
 
 const toDoTemplate = `
 <div id="display-todo">
@@ -185,16 +93,16 @@ const toDoTemplate = `
                 <input type="checkbox" name="todo-checklsit" id="">
                 <span class="todo-checklist-item-title">Finish course</span>
             </div>
-        </div>
-        <div id="todo-priority">
+            </div>
+            <div id="todo-priority">
             <select name="choice">
-                <option value="high">🔴High Priority</option>
-                <option value="medium">🟢Meidum Priority</option>
-                <option value="low">🟡Low Priority</option>
+            <option value="high">🔴High Priority</option>
+            <option value="medium">🟢Meidum Priority</option>
+            <option value="low">🟡Low Priority</option>
             </select>
-        </div>
+            </div>
         <div id="todo-due-date">
-            <input type="date" name="due todo-due-date" id="">
+        <input type="date" name="due todo-due-date" id="">
         </div>
         <div id="todo-notes">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga consequuntur voluptatum autem harum fugit blanditiis eveniet! Amet corrupti adipisci optio natus, earum deleniti voluptatibus facilis ad in voluptas, odio repudiandae?
@@ -205,21 +113,21 @@ const toDoTemplate = `
 const searchTemplate = `
    <div id="search">
         <div id="search-input-area">
-            <span id="search-input-area-look-icon">🔍</span>
+        <span id="search-input-area-look-icon">🔍</span>
             <input type="text" name="enter search value" id="search-input-area-input">
-            <span id="search-input-area-delete-icon">❌</span>
-        </div>
+           
+            </div>
         <div id="search-results">
-            <div class="search-result  search-item" id="search-result-today">⭐ Today</div>
-            <div class="search-result" id="search-result-projects">
-                <div class="search-project-item search-item">
-                <span class="search-project-icon">🔵</span>
-                <span class="search-project-title">Programming</span>
-                </div>
-                <div class="search-project-item search-item">
-                <span class="search-project-icon">🔵</span>
-                <span class="search-project-title">Studying</span>
-                </div>
+        <div class="search-result  search-item" id="search-result-today">⭐ Today</div>
+        <div class="search-result" id="search-result-projects">
+        <div class="search-project-item search-item">
+        <span class="search-project-icon">🔵</span>
+        <span class="search-project-title">Programming</span>
+        </div>
+        <div class="search-project-item search-item">
+        <span class="search-project-icon">🔵</span>
+        <span class="search-project-title">Studying</span>
+        </div>
                 <div class="search-project-item search-item">
                 <span class="search-project-icon">🔵</span>
                 <span class="search-project-title">English</span>
@@ -236,37 +144,64 @@ const searchTemplate = `
                 <span class="search-todo-icon">☑</span>
                 <span class="search-todo-title">Do the dishes</span>
                 </div>
-            <div class="search-todo-item search-item">
+                <div class="search-todo-item search-item">
                 <span class="search-todo-icon">☑</span>
                 <span class="search-todo-title">Swim</span>
                 </div>
             <div class="search-todo-item search-item">
-                <span class="search-todo-icon">☑</span>
-                <span class="search-todo-title">Code</span>
-                </div>
-            <div class="search-todo-item search-item">
-                <span class="search-todo-icon">☑</span>
-                <span class="search-todo-title">Conquer the World</span>
-                </div>
+            <span class="search-todo-icon">☑</span>
+            <span class="search-todo-title">Code</span>
             </div>
-        </div>
-    </div>
+            <div class="search-todo-item search-item">
+            <span class="search-todo-icon">☑</span>
+            <span class="search-todo-title">Conquer the World</span>
+            </div>
+            </div>
+            </div>
+            </div>
 `;
-const upcomingTemplate = "";
+const upcomingTemplate = `<h1>Upcoming</h1>`;
+const todayTemplate = `<h1>Today</h1>`;
+const createProjectTemplate = `<h1>Crete a Project</h1>`;
 
 function sideBar() {
-  const sideBar = document.createElement("div");
-  sideBar.id = "side-bar";
+    let currentTab = null;
+  const sideBarDiv = document.getElementById("side-bar");
+  sideBarDiv.insertAdjacentHTML("beforeend", sideBarTemplate);
 
-  sideBar.insertAdjacentHTML("beforeend", sideBarTemplate);
-  return sideBar;
+  const sideBarSearch = document.getElementById("sidebar-search");
+  sideBarSearch.addEventListener("click", () => {
+    mainContent(searchTemplate);
+  });
+
+  const sideBarUpcoming = document.getElementById("sidebar-upcoming");
+  sideBarUpcoming.addEventListener("click", () => {
+    mainContent(upcomingTemplate);
+  });
+
+  const sidebarToday = document.getElementById("sidebar-today");
+  sidebarToday.addEventListener("click", () => mainContent(todayTemplate));
+
+  const createToDo = document.getElementById("sidebar-create-todo");
+  createToDo.addEventListener("click", () => mainContent(createTaskTemplate));
+
+  const addProject = document.getElementById("add-new-project");
+  addProject.addEventListener("click", () =>
+    createProjectDom()
+  );
+  displayProject();
 }
 
-function mainContent() {
-  const mainContent = document.createElement("div");
-  mainContent.id = "main-content";
+const homeButton = document.getElementById("main-content-header-home-button");
+homeButton.addEventListener("click", () => mainContent());
 
-  mainContent.insertAdjacentHTML("beforeend", toDoTemplate);
+export function mainContent(content = defaultMainContentTemplate) {
+  const mainContentDiv = document.getElementById("content-part");
+  mainContentDiv.innerHTML = "";
+  mainContentDiv.insertAdjacentHTML("beforeend", content);
+}
 
-  return mainContent;
+export function mainPage() {
+  sideBar();
+  mainContent(createTaskTemplate);
 }

@@ -1,11 +1,11 @@
 body {
   display: grid;
   height: 100vh;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 4fr;
 }
 
 #main-content {
-  padding: 35px;
+  /* padding: 35px; */
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -64,7 +64,6 @@ body {
 i {
   font-size: 1.3rem !important;
 }
-
 #projects-checklist-items-wrapper {
   display: flex;
   flex-direction: column;
@@ -73,4 +72,28 @@ i {
 .project-todo-project {
     color: rgba(0, 0, 0, 0.539);
     font-size: 0.8rem;
+}
+
+#main-content-header {
+  background-color: rgba(123, 236, 236, 0.095);
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.effect1 {
+  cursor: pointer;
+  border: none;
+  padding: 5px;
+  border-radius: 10px;
+}
+.effect1:hover {
+    box-shadow: 2px 1px 1px rgba(0, 0, 0, 0.196);
+}
+#content-part {
+  padding: 25px;
+}
+
+.activeTab {
+  border: 1px solid red !important;
 }

@@ -11,6 +11,7 @@ module.exports = {
   ],
   devServer: {
     watchFiles: ["./src/index.js", "./src/template.js"],
+    open: false
   },
   output: {
     filename: "[name].bundle.js",
