@@ -4,7 +4,7 @@ import "../Styles/search.css";
 import "../Styles/todo.css";
 import {displayProject} from './createProject';
 import {createProjectDom} from './createProject';
-import {createTaskTemplate} from "./creeateTask"
+import {createTaskDom, createTaskTemplate, renderTask, taskTemplate} from "./creeateTask"
 
 const sideBarTemplate = `
 <div id="sidebar-utility">
@@ -165,7 +165,7 @@ const todayTemplate = `<h1>Today</h1>`;
 const createProjectTemplate = `<h1>Crete a Project</h1>`;
 
 function sideBar() {
-    let currentTab = null;
+  let currentTab = null;
   const sideBarDiv = document.getElementById("side-bar");
   sideBarDiv.insertAdjacentHTML("beforeend", sideBarTemplate);
 
@@ -183,7 +183,7 @@ function sideBar() {
   sidebarToday.addEventListener("click", () => mainContent(todayTemplate));
 
   const createToDo = document.getElementById("sidebar-create-todo");
-  createToDo.addEventListener("click", () => mainContent(createTaskTemplate));
+  createToDo.addEventListener("click", createTaskDom);
 
   const addProject = document.getElementById("add-new-project");
   addProject.addEventListener("click", () =>
@@ -203,5 +203,7 @@ export function mainContent(content = defaultMainContentTemplate) {
 
 export function mainPage() {
   sideBar();
-  mainContent(createTaskTemplate);
+  mainContent(createProjectTemplate);
+  createTaskDom();
+  renderTask("1", "03370cd5-d3a2-4d25-a1b6-e36b946ec1bb");
 }

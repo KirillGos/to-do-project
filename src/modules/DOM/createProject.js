@@ -51,7 +51,7 @@ export function displayProject() {
   const projects = Project.displayProjects();
   projects.forEach((project) => {
     sidebarProjects.insertAdjacentHTML(
-      "beforeend",
+      "afterbegin",
       `
         <div class ="sidebar-project-item" id="${project.id}">
          <div class="sidebar-project-title">${project.title}</div>
