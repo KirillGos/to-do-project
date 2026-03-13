@@ -1,0 +1,1 @@
+export const upcomingTemplate = `<h1>Upcoming</h1>`;

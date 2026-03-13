@@ -1,0 +1,1 @@
+export const todayTemplate = `<h1>Today</h1>`;
