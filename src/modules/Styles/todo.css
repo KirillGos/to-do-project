@@ -12,3 +12,48 @@
   font-weight: lighter;
   font-size: 16px;
 }
+
+
+.task-item {
+  cursor: pointer;
+}
+#checklist-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 5px !important;
+}
+
+.create-new-todo {
+  width: 80%;
+  text-align: center;
+  padding: 5px;
+  align-self: center;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+.check-list-item {
+  border: 1px solid rgba(0, 0, 0, 0.464);
+  padding: 3px;
+  border-radius: 5px;
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  align-items: center !important;
+}
+
+.create-new-todo {
+  cursor: pointer;
+}
+
+.checklist-style {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.check-style input {
+  height: 20px;
+}
