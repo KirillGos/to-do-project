@@ -1,7 +1,7 @@
 import find from "../find";
 import Project from "../projects";
 import CreateToDo from "../todo";
-import { mainContent } from "./mainPage";
+import { mainContent, State } from "./mainPage";
 
 export const createTaskTemplate = `
 <div id="create-task-table">
@@ -11,18 +11,12 @@ export const createTaskTemplate = `
         <div id="create-task-name">
             <input id="create-task-name-input" type="text" placeholder="enter task name">
         </div>
-        <div id="create-task-description">
-            <h1>Enter task description</h1>
-            <textarea id="create-task-description-textarea"
-             placeholder="enter task description." name="textarea">
-            </textarea>
-        </div>
         <div id="create-task-checklist">
 
         </div>
-        <div id="create-project-duedate">
+        <div id="create-task-duedate">
             <h1>Enter Due Date</h1>
-            <input type="date" id="project-duedate-input" >
+            <input type="date" id="task-duedate-input" >
         </div>
         <div id="task-priority">
             <h1>Select Task Priority</h1>
@@ -94,11 +88,7 @@ function createTask() {
 
 function handleClick() {
   const title = document.getElementById("create-task-name-input").value;
-  const description = document.getElementById(
-    "create-task-description-textarea",
-  ).value;
-
-  const date = document.getElementById("project-duedate-input").value;
+  const date = document.getElementById("task-duedate-input").value;
 
   const selectPriority = document.getElementById("create-task-select").value;
 
@@ -109,7 +99,6 @@ function handleClick() {
 
   const todo = new CreateToDo(
     title,
-    description,
     date,
     selectPriority,
     checklist,
@@ -120,6 +109,7 @@ function handleClick() {
 }
 
 export function createTaskDom() {
+  State.currentTab = "Create task";
   mainContent(createTaskTemplate);
   createTask();
 }
@@ -134,35 +124,38 @@ function createCheckListItem() {
   document.getElementById("create-checklist-input").value = "";
 }
 
-function renderCheckList(taskChecklist) {
+export function renderCheckList(taskChecklist) {
   const checkListContainer = document.getElementById(
     "checklist-items-container",
   );
   checkListContainer.innerHTML = "";
-    taskChecklist.forEach((item) => {
-      checkListContainer.insertAdjacentHTML(
-        "beforeend",
-        `
+  taskChecklist.forEach((item) => {
+    checkListContainer.insertAdjacentHTML(
+      "beforeend",
+      `
           <div class="check-list-item" id="${item.id}">
-              <input type="checkbox">${item.title}
+              <div class="checklist-style"><input type="checkbox">${item.title}</div>
               <span class="delete-checklist-item">❌</span>
           </div>
       `,
-      );
-    });
+    );
+  });
 }
 
 export function renderTask(projectId, taskId) {
   const projectObject = find(projectId, taskId);
   const todoItem = projectObject.project.list[projectObject.toDoIndex];
-
   let taskPriority = null;
-  if (todoItem.priority === "low") {
-    taskPriority = "🟡 Low Priority";
-  } else if (todoItem.priority === "medium") {
-    taskPriority = "🟢 Medium Priority";
-  } else {
-    taskPriority = "🔴 Hight Priority";
+  try {
+    if (todoItem.priority === "low") {
+      taskPriority = "🟡 Low Priority";
+    } else if (todoItem.priority === "medium") {
+      taskPriority = "🟢 Medium Priority";
+    } else {
+      taskPriority = "🔴 Hight Priority";
+    }
+  } catch (error) {
+    console.log(todoItem);
   }
 
   const toDoTemplate = `
@@ -178,13 +171,20 @@ export function renderTask(projectId, taskId) {
       
         <h1  style="font-size: 25px;" id="task-title">${todoItem.title}</h1>
     </div>
-     <div id="display-task-description">${todoItem.description}</div>
       <div id="checklist-items-wrapper">
         <h1><b><i>CheckList:</i></b></h1>
         <div id="checklist-items-container"></div>
       </div>
     </div>
+
+    <div id="create-new-todo" class="create-new-todo">
+      Create new Task ➕
+    </div>
 `;
   mainContent(toDoTemplate);
+  const createNewTodoBtn = document.getElementById("create-new-todo");
+  createNewTodoBtn.addEventListener('click', () => {
+    createTaskDom();
+  });
   renderCheckList(todoItem.checkLists);
 }

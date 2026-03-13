@@ -2,9 +2,16 @@ import "../Styles/mainPage.css";
 import "../Styles/sidebar.css";
 import "../Styles/search.css";
 import "../Styles/todo.css";
-import {displayProject} from './createProject';
-import {createProjectDom} from './createProject';
-import {createTaskDom, createTaskTemplate, renderTask, taskTemplate} from "./creeateTask"
+import { displayProjectsSidebar, renderProject } from "./createProject";
+import { createProjectDom } from "./createProject";
+import { createTaskDom } from "./createTask";
+
+export class State {
+  static currentProject = "";
+  static currentTask = "";
+  static currentTab = "";
+}
+
 
 const sideBarTemplate = `
 <div id="sidebar-utility">
@@ -81,35 +88,6 @@ const defaultMainContentTemplate = `
     </div>
 `;
 
-
-const toDoTemplate = `
-<div id="display-todo">
-        <div id="todo-title">Finish Course</div>
-        <div id="todo-description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quia porro, nihil quod, cum sint corporis sunt dolorem illum aspernatur, veniam molestiae officia possimus quasi nulla officiis perferendis voluptatem vero?
-        </div>
-        <div id="todo-checklist">
-            <div class="todo-checklist-item">
-                <input type="checkbox" name="todo-checklsit" id="">
-                <span class="todo-checklist-item-title">Finish course</span>
-            </div>
-            </div>
-            <div id="todo-priority">
-            <select name="choice">
-            <option value="high">🔴High Priority</option>
-            <option value="medium">🟢Meidum Priority</option>
-            <option value="low">🟡Low Priority</option>
-            </select>
-            </div>
-        <div id="todo-due-date">
-        <input type="date" name="due todo-due-date" id="">
-        </div>
-        <div id="todo-notes">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga consequuntur voluptatum autem harum fugit blanditiis eveniet! Amet corrupti adipisci optio natus, earum deleniti voluptatibus facilis ad in voluptas, odio repudiandae?
-        </div>
-    </div>
-    `;
-
 const searchTemplate = `
    <div id="search">
         <div id="search-input-area">
@@ -160,12 +138,11 @@ const searchTemplate = `
             </div>
             </div>
 `;
+
 const upcomingTemplate = `<h1>Upcoming</h1>`;
 const todayTemplate = `<h1>Today</h1>`;
-const createProjectTemplate = `<h1>Crete a Project</h1>`;
 
 function sideBar() {
-  let currentTab = null;
   const sideBarDiv = document.getElementById("side-bar");
   sideBarDiv.insertAdjacentHTML("beforeend", sideBarTemplate);
 
@@ -186,10 +163,8 @@ function sideBar() {
   createToDo.addEventListener("click", createTaskDom);
 
   const addProject = document.getElementById("add-new-project");
-  addProject.addEventListener("click", () =>
-    createProjectDom()
-  );
-  displayProject();
+  addProject.addEventListener("click", createProjectDom);
+  displayProjectsSidebar();
 }
 
 const homeButton = document.getElementById("main-content-header-home-button");
@@ -203,7 +178,5 @@ export function mainContent(content = defaultMainContentTemplate) {
 
 export function mainPage() {
   sideBar();
-  mainContent(createProjectTemplate);
-  createTaskDom();
-  renderTask("1", "03370cd5-d3a2-4d25-a1b6-e36b946ec1bb");
+  renderProject("1");
 }
