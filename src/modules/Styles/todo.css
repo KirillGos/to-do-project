@@ -17,7 +17,7 @@
 .task-item {
   cursor: pointer;
 }
-#checklist-items-container {
+#checklist-items-container, .checklist-items-container {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -34,11 +34,11 @@
 }
 
 .check-list-item {
-  border: 1px solid rgba(0, 0, 0, 0.464);
+  /* border: 1px solid rgba(0, 0, 0, 0.464); */
   padding: 3px;
   border-radius: 5px;
   display: flex;
-  width: 80%;
+  width: 60%;
   justify-content: space-between;
   align-items: center !important;
 }
@@ -56,4 +56,63 @@
 
 .check-style input {
   height: 20px;
+}
+.task-item  {
+  width: 70%;
+}
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+}
+.task-title {
+  color: rgb(99, 99, 246);
+}
+
+#todo-container {
+  overflow-y: scroll;
+  height: 65vh;
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+}
+
+#project-todos-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#create-checklist-item {
+  cursor: pointer;
+  border: 1px solid red;
+  padding: 5px;
+  width: 50%;
+  text-align: center;
+  border-radius: 5px;
+}
+#create-checklist-item:hover {
+  opacity: 0.5;
+}
+
+#project-title-h1{
+  cursor: pointer;
+}
+#project-title-h1:hover{
+  color: rgba(81, 81, 204, 0.79);
+}
+
+#project-category {
+  display: flex;
+  gap: 20px;
+}
+.project-category-item {
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: 0.5px solid cyan;
+  cursor: pointer;
+  color: rgb(164, 162, 162);
+}
+.active-category {
+  background-color: rgba(175, 170, 170, 0.31);
 }

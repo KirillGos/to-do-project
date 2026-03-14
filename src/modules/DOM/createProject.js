@@ -1,40 +1,11 @@
 import { mainContent, State } from "./mainPage.js";
+import "../Styles/project.css";
 import Project from "../projects.js";
 import findProject from "../findProject.js";
-import { renderTask } from "./createTask.js";
-
-const createProjectTemplate = `
-    <div id="create-project-container">
-        <div id="create-project-header">
-            <h1>Create a Project</h1>
-        </div>
-        <div id="create-project-name">
-            <input id="create-project-name-input" type="text" placeholder="enter project name">
-        </div>
-        <div id="create-project-description">
-            <h1>Enter project description</h1>
-            <textarea id="create-project-description-textarea"
-             placeholder="enter project description." name="textarea" col="15" rows="12"></textarea>
-        </div>
-        <div id="create-project-duedate">
-            <h1>Enter Due Date</h1>
-            <input type="date" id="project-duedate-input" >
-        </div>
-        <div id="project-priority">
-            <h1>Select Priority</h1>
-            <select name="choice" id="create-project-select">
-            <option value="high">🔴High Priority</option>
-            <option value="medium">🟢Meidum Priority</option>
-            <option value="low">🟡Low Priority</option>
-            </select>
-            </div>
-        <div>
-            <button id="add-project-btn" type="text">Add</button>
-        </div>
-    </div>
-`;
-
-
+import { renderCheckList, renderTask } from "./createTask.js";
+import { createProjectTemplate } from "./HTML Modules/createProjectTemplate.js";
+import { categorizeProjects } from "./categorizeProjects.js";
+import { editToDoCheckListItems } from "../updateToDo.js";
 export function createProjectDom() {
   State.currentTab = "Create a project";
   mainContent(createProjectTemplate);
@@ -46,10 +17,19 @@ function handleClick() {
   const projectTitle = document.getElementById(
     "create-project-name-input",
   ).value;
-  const projectDescription = document.getElementById("create-project-description-textarea").value;
+  const projectDescription = document.getElementById(
+    "create-project-description-textarea",
+  ).value;
   const projectDate = document.getElementById("project-duedate-input").value;
-  const projectPriority = document.getElementById("create-project-select").value;
-  const newProject = new Project(projectTitle, projectDate, projectPriority, projectDescription);
+  const projectPriority = document.getElementById(
+    "create-project-select",
+  ).value;
+  const newProject = new Project(
+    projectTitle,
+    projectDate,
+    projectPriority,
+    projectDescription,
+  );
   State.currentProject = newProject;
   renderProject(newProject.id);
   displayProjectsSidebar();
@@ -82,9 +62,9 @@ export function renderProject(id) {
   State.currentProject = project;
 
   let projectPriority = null;
-  if(project.priority === "low") {
+  if (project.priority === "low") {
     projectPriority = "🟡 Low Priority";
-  } else if(project.priority === "medium") {
+  } else if (project.priority === "medium") {
     projectPriority = "🟢 Medium Priority";
   } else {
     projectPriority = "🔴 Hight Priority";
@@ -104,40 +84,77 @@ export function renderProject(id) {
         <div id="project-description">
           ${project.description}
         </div>
-        <div id="todo-container">
-          <h1 class="todo-container-header">Todos:</h1>
-          <div id="todos">
+        <div id="project-category">
+          <div class="project-category-item active-category" id="all-projects" data-priority="all">All</div>
+          <div  class="project-category-item" id="important-projects" data-priority="important">Important</div>
+          <div  class="project-category-item" id="edit-category" data-priority="other">
+            <select id="select-priority">
+              <option value="nothing">ooo</option>
+              <option value="low">Unimportant</option>
+              <option value="medium">Middle</option>
+           </select>
+          </div>
         </div>
-        
-          </div>
-
-          <div id="checklists-container">
-            <h1 class="checklists-title">Checklists in this project:</h1>
-            <div id="checklists">
-            
-            </div>
-          </div>
+        <div id="todo-container">
+          
+        </div>
+      </div>
     </div>
     `;
 
   mainContent(displayProjectTemplate);
   renderTasks(project);
-} 
+  categorizeProjects();
+}
 
-function renderTasks(project){
-  const taskContainer = document.getElementById("todos");
-  project.list.forEach(task => {
-    taskContainer.insertAdjacentHTML('beforeend', `
-        <div class="task-item" id="${task.id}">
-          <h1 class="task-title-h1">${task.title}</h1>
-          <span class="task-duedate-span">${task.dueDate}</span>
+export function renderTasks(project) {
+  const taskContainer = document.getElementById("todo-container");
+  taskContainer.innerHTML = "";
+  project.list.forEach((task) => {
+    taskContainer.insertAdjacentHTML(
+      "beforeend",
+      `
+        <div class="task-item" id="${task.id}" data-importance="${task.priority}">
+          <div class="task-header">
+            <h1 class="task-title">${task.title}</h1>
+            <div class="task-utility">OOO</div>
+          </div>
+          <div class='checklist-items-container'>
+          </div>
         </div>
-    `);  
-  }); 
-  const allTasksListed = document.querySelectorAll(".task-item");
-  allTasksListed.forEach(task => {
-    task.addEventListener('click', () => {
-      renderTask(State.currentProject.id, task.id);
-    })
-  })
+    `,
+    );
+    const checkListContainer = document.getElementById(`${task.id}`)
+      .childNodes[3];
+    task.checkLists.forEach((item) => {
+      if (checkListContainer.childElementCount < 5) {
+        checkListContainer.insertAdjacentHTML(
+          "beforeend",
+          `
+            <div class="check-list-item" id="${item.id}">
+                <div class="checklist-style">
+                <input type="checkbox" class="checklist-checkbox-item" data-taskid="${task.id}" ${item.status ? "checked" : ''}>${item.title}
+                </div>
+            </div>
+        `,
+        );
+      }
+    });
+  });
+
+  const allTaskUtilityBtns = document.querySelectorAll(".task-utility");
+  allTaskUtilityBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      renderTask(State.currentProject.id, btn.parentElement.parentElement.id);
+    });
+  });
+
+  const allCheckboxInputs = document.querySelectorAll(
+    ".checklist-checkbox-item",
+  );
+  allCheckboxInputs.forEach((element) =>
+    element.addEventListener("click", () => {
+      editToDoCheckListItems(State.currentProject.id, element.dataset.taskid ,element.parentElement.parentElement.id);
+    }),
+  );
 }

@@ -1,4 +1,5 @@
 import find from "./find";
+import findChecklist from "./findChecklist";
 import saveToLocalStorage from './saveProjects'
 
 // title, description, dueDate, priority, notes, checkLists,
@@ -32,8 +33,15 @@ export function editToDoNotes(projectId, toDoId, notes) {
   saveToLocalStorage();
 }
 
-export function editToDoCheckLists(projectId, toDoId, checkList) {
-  const { project, toDoIndex } = find(projectId, toDoId);
-  project.list[toDoIndex].checkLists = checkList;
+export function editToDoCheckListItems(projectId, toDoId, itemId) {
+  const infoObj = find(projectId, toDoId);
+  const project = infoObj.project;
+  const checkList = project.list[infoObj.toDoIndex].checkLists;
+  
+  const checkListItemIndex = findChecklist(checkList, itemId);
+  const checkListItem = checkList[checkListItemIndex];
+  
+  checkListItem.status ? checkListItem.status = false : checkListItem.status = true;
+
   saveToLocalStorage();
 }

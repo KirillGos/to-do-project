@@ -1,7 +1,7 @@
-import Project from "./projects";
-import CreateToDo from "./todo";
-import deleteToDo from "./deleteToDo";
-import * as updateFunctions from "./updateToDo";
+// import Project from "./projects";
+// import CreateToDo from "./todo";
+// import deleteToDo from "./deleteToDo";
+// import * as updateFunctions from "./updateToDo";
 import { mainPage } from "./DOM/mainPage";
 
 export default function App() {
