@@ -157,6 +157,4 @@ export function renderTask(projectId, taskId) {
     "checklist-items-container",
   );
   renderCheckList(todoItem, checkListContainer);
-  addEventToCheckbox();
-  addEventToDeleteCheckbox();
 }
