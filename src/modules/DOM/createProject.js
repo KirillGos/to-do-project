@@ -2,10 +2,11 @@ import { mainContent, State } from "./mainPage.js";
 import "../Styles/project.css";
 import Project from "../projects.js";
 import findProject from "../findProject.js";
-import { renderCheckList, renderTask } from "./createTask.js";
+import { renderTask } from "./createTask.js";
 import { createProjectTemplate } from "./HTML Modules/createProjectTemplate.js";
 import { categorizeProjects } from "./categorizeProjects.js";
 import { editToDoCheckListItems } from "../updateToDo.js";
+import { renderCheckList } from "./renderChecklist.js";
 export function createProjectDom() {
   State.currentTab = "Create a project";
   mainContent(createProjectTemplate);
@@ -126,20 +127,7 @@ export function renderTasks(project) {
     );
     const checkListContainer = document.getElementById(`${task.id}`)
       .childNodes[3];
-    task.checkLists.forEach((item) => {
-      if (checkListContainer.childElementCount < 5) {
-        checkListContainer.insertAdjacentHTML(
-          "beforeend",
-          `
-            <div class="check-list-item" id="${item.id}">
-                <div class="checklist-style">
-                <input type="checkbox" class="checklist-checkbox-item" data-taskid="${task.id}" ${item.status ? "checked" : ''}>${item.title}
-                </div>
-            </div>
-        `,
-        );
-      }
-    });
+    renderCheckList(task, checkListContainer);
   });
 
   const allTaskUtilityBtns = document.querySelectorAll(".task-utility");
@@ -148,13 +136,34 @@ export function renderTasks(project) {
       renderTask(State.currentProject.id, btn.parentElement.parentElement.id);
     });
   });
+  addEventToCheckbox();
+  addEventToDeleteCheckbox();
+}
 
+export function addEventToCheckbox() {
   const allCheckboxInputs = document.querySelectorAll(
     ".checklist-checkbox-item",
   );
   allCheckboxInputs.forEach((element) =>
     element.addEventListener("click", () => {
-      editToDoCheckListItems(State.currentProject.id, element.dataset.taskid ,element.parentElement.parentElement.id);
+      editToDoCheckListItems(
+        State.currentProject.id,
+        element.dataset.taskid,
+        element.parentElement.parentElement.id,
+      );
     }),
   );
+}
+
+export function addEventToDeleteCheckbox() {
+  const allDeleteCheckListItems = document.querySelectorAll(
+    ".delete-checklist-item-btn",
+  );
+  allDeleteCheckListItems.forEach(btn => {
+    btn.addEventListener('click', deleteCheckListAction);
+  })
+}
+
+export function deleteCheckListAction(e) {
+  console.log(e.target.parentElement.parentElement.parentElement);
 }

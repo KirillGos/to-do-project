@@ -3,8 +3,9 @@ import Project from "../projects";
 import CreateToDo from "../todo";
 import { mainContent, State } from "./mainPage";
 import { createTaskTemplate } from "./HTML Modules/createTaskTemplate";
-import { renderProject } from "./createProject";
+import { addEventToCheckbox, addEventToDeleteCheckbox, renderProject } from "./createProject";
 import { editToDoCheckListItems } from "../updateToDo";
+import { renderCheckList } from "./renderChecklist";
 
 class CheckList {
   static checkList = [];
@@ -77,11 +78,11 @@ function createCheckListItem() {
   ).value;
   const checklistId = crypto.randomUUID();
   const newItem = new CheckList(checklistId, checkListInput);
-  renderCheckList(CheckList.checkList);
+  renderCheckListSimple(CheckList.checkList);
   document.getElementById("create-checklist-input").value = "";
 }
 
-export function renderCheckList(taskChecklist) {
+export function renderCheckListSimple(taskChecklist) {
   const checkListContainer = document.getElementById(
     "checklist-items-container",
   );
@@ -90,10 +91,13 @@ export function renderCheckList(taskChecklist) {
     checkListContainer.insertAdjacentHTML(
       "beforeend",
       `
-          <div class="check-list-item" id="${item.id}">
-              <div class="checklist-style"><input type="checkbox" class="check-list-item-input" ${item.status ? "checked" : ''}>${item.title}</div>
-              <span class="delete-checklist-item">❌</span>
-          </div>
+            <div class="check-list-item" id="${item.id}">
+                <div class="checklist-style"><input type="checkbox" 
+                class="checklist-checkbox-item" 
+                ${item.status ? "checked" : ''}>${item.title}
+                </div>
+                <span class="delete-checklist-item-btn">❌</span>
+            </div>
       `,
     );
   });
@@ -149,6 +153,10 @@ export function renderTask(projectId, taskId) {
   createNewTodoBtn.addEventListener("click", () => {
     console.log("works");
   });
-
-  renderCheckList(todoItem.checkLists);
+  const checkListContainer = document.getElementById(
+    "checklist-items-container",
+  );
+  renderCheckList(todoItem, checkListContainer);
+  addEventToCheckbox();
+  addEventToDeleteCheckbox();
 }

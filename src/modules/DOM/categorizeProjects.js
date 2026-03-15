@@ -5,7 +5,10 @@ export function categorizeProjects() {
   const categorizeProjects = document.querySelectorAll(
     ".project-category-item",
   );
-
+  const todoContainer = document.getElementById("todo-container");
+  if (todoContainer.childElementCount == 0) {
+    todoContainer.innerHTML = `<h1>No tasks here!</h1>`;
+  }
   categorizeProjects.forEach((div) => {
     div.addEventListener("click", () => {
       categorizeProjects.forEach((item) => {
@@ -36,11 +39,10 @@ function sortTasks(div, priority) {
           task.remove();
         }
       });
-    } else if(selected == 'nothing') {
-      todoContainer.innerHTML = `<h1>Select category!</h1>`
+    } else if (selected == "nothing") {
+      todoContainer.innerHTML = `<h1>Select category!</h1>`;
     }
   }
-
   if (todoContainer.childElementCount == 0) {
     todoContainer.innerHTML = `<h1>No tasks here!</h1>`;
   }
