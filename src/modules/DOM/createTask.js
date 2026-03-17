@@ -3,9 +3,8 @@ import Project from "../projects";
 import CreateToDo from "../todo";
 import { mainContent, State } from "./mainPage";
 import { createTaskTemplate } from "./HTML Modules/createTaskTemplate";
-import { addEventToCheckbox, addEventToDeleteCheckbox, renderProject } from "./createProject";
-import { editToDoCheckListItems } from "../updateToDo";
 import { renderCheckList } from "./renderChecklist";
+import { renderProject } from "./createProject";
 
 class CheckList {
   static checkList = [];
@@ -38,6 +37,12 @@ function createTask() {
   });
 
   createCheckListBtn.addEventListener("click", createCheckListItem);
+  const checkListInput = document.getElementById("create-checklist-input");
+  checkListInput.addEventListener('keydown', (e) => {
+    if(e.key == 'Enter') {
+      createCheckListItem();
+    }
+  })
 
   const addTodoBtn = document.getElementById("add-task-btn");
   addTodoBtn.addEventListener("click", handleClick);
@@ -76,6 +81,7 @@ function createCheckListItem() {
   const checkListInput = document.getElementById(
     "create-checklist-input",
   ).value;
+
   const checklistId = crypto.randomUUID();
   const newItem = new CheckList(checklistId, checkListInput);
   renderCheckListSimple(CheckList.checkList);
@@ -94,7 +100,7 @@ export function renderCheckListSimple(taskChecklist) {
             <div class="check-list-item" id="${item.id}">
                 <div class="checklist-style"><input type="checkbox" 
                 class="checklist-checkbox-item" 
-                ${item.status ? "checked" : ''}>${item.title}
+                ${item.status ? "checked" : ""}>${item.title}
                 </div>
                 <span class="delete-checklist-item-btn">❌</span>
             </div>
@@ -106,7 +112,7 @@ export function renderCheckListSimple(taskChecklist) {
 export function renderTask(projectId, taskId) {
   const projectObject = find(projectId, taskId);
   const todoItem = projectObject.project.list[projectObject.toDoIndex];
-   State.currentTask = todoItem;
+  State.currentTask = todoItem;
   let taskPriority = null;
   try {
     if (todoItem.priority === "low") {
@@ -135,7 +141,7 @@ export function renderTask(projectId, taskId) {
     </div>
       <div id="checklist-items-wrapper">
         <h1><b><i>CheckList:</i></b></h1>
-        <div id="checklist-items-container"></div>
+        <div id="checklist-items-container" data-taskid="${todoItem.id}"></div>
       </div>
     </div>
 
@@ -156,5 +162,6 @@ export function renderTask(projectId, taskId) {
   const checkListContainer = document.getElementById(
     "checklist-items-container",
   );
-  renderCheckList(todoItem, checkListContainer);
+
+  renderCheckList(todoItem.checkLists, checkListContainer);
 }

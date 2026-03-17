@@ -34,6 +34,7 @@ export function editToDoNotes(projectId, toDoId, notes) {
 }
 
 export function editToDoCheckListItems(projectId, toDoId, itemId) {
+  console.log(arguments)
   const infoObj = find(projectId, toDoId);
   const project = infoObj.project;
   const checkList = project.list[infoObj.toDoIndex].checkLists;

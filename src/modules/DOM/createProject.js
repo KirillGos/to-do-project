@@ -5,12 +5,8 @@ import findProject from "../findProject.js";
 import { renderTask } from "./createTask.js";
 import { createProjectTemplate } from "./HTML Modules/createProjectTemplate.js";
 import { categorizeProjects } from "./categorizeProjects.js";
-import { editToDoCheckListItems } from "../updateToDo.js";
 import { renderCheckList } from "./renderChecklist.js";
-import find from "../find.js";
-import findChecklist from "../findChecklist.js";
-import findToDo from "../findToDo.js";
-import saveToLocalStorage from "../saveProjects.js";
+
 export function createProjectDom() {
   State.currentTab = "Create a project";
   mainContent(createProjectTemplate);
@@ -124,14 +120,14 @@ export function renderTasks(project) {
             <h1 class="task-title">${task.title}</h1>
             <div class="task-utility">OOO</div>
           </div>
-          <div class='checklist-items-container' data-taskId="${task.id}">
+          <div class='checklist-items-container' data-taskid="${task.id}">
           </div>
         </div>
     `,
     );
     const checkListContainer = document.getElementById(`${task.id}`)
       .childNodes[3];
-    renderCheckList(task, checkListContainer);
+    renderCheckList(task.checkLists, checkListContainer);
   });
 
   const allTaskUtilityBtns = document.querySelectorAll(".task-utility");
@@ -142,40 +138,3 @@ export function renderTasks(project) {
   });
 }
 
-export function addEventToCheckbox() {
-  const allCheckboxInputs = document.querySelectorAll(
-    ".checklist-checkbox-item",
-  );
-  allCheckboxInputs.forEach((element) =>
-    element.addEventListener("click", () => {
-      editToDoCheckListItems( 
-        State.currentProject.id,
-        element.dataset.taskid,
-        element.parentElement.parentElement.id,
-      );
-    }),
-  );
-}
-
-export function addEventToDeleteCheckbox() {
-  const allDeleteCheckListItems = document.querySelectorAll(
-    ".delete-checklist-item-btn",
-  );
-  allDeleteCheckListItems.forEach((btn) => {
-    btn.addEventListener("click", deleteCheckListAction);
-  });
-}
-
-export function deleteCheckListAction(e) {
-  const todoIndex = findToDo(
-    State.currentProject.list,
-    e.target.dataset.taskid,
-  );
-  const todo = State.currentProject.list[todoIndex];
-  const checkList = todo.checkLists;
-  const deleteItemIndex = findChecklist(checkList, e.target.parentElement.id);
-  checkList.splice(deleteItemIndex, 1);
-
-  e.target.parentElement.remove();
-  saveToLocalStorage();
-}
