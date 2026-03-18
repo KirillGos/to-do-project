@@ -1,3 +1,5 @@
+import { checkListTemplate } from "./createCheckList";
+
  export const createTaskTemplate = `
 <div id="create-task-table">
      <div id="create-task-header">
@@ -28,19 +30,7 @@
             </select>
             </div>
         <div>
-        <div id="task-checklist-container">
-            <h1>Create Checklist for this task</h1>
-            <input type="text"
-                name="task name input"
-                placeholder="write checklist"
-                type="text"
-                id="create-checklist-input"
-                >
-            <button id="add-checklist-btn">Add Checklist</button>
-            <div id="checklist-items-container">
-                
-            </div>
-        </div>
+            ${checkListTemplate}
             <button id="add-task-btn">Create Task</button>
         </div>
 </div>

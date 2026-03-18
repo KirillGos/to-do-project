@@ -33,7 +33,7 @@ export function editToDoNotes(projectId, toDoId, notes) {
   saveToLocalStorage();
 }
 
-export function editToDoCheckListItems(projectId, toDoId, itemId) {
+export function editCheckListCheckbox(projectId, toDoId, itemId) {
   console.log(arguments)
   const infoObj = find(projectId, toDoId);
   const project = infoObj.project;
@@ -44,5 +44,10 @@ export function editToDoCheckListItems(projectId, toDoId, itemId) {
   
   checkListItem.status ? checkListItem.status = false : checkListItem.status = true;
 
+  saveToLocalStorage();
+}
+
+export function editCheckList(todo, newList) {
+  todo.checkLists = newList;
   saveToLocalStorage();
 }

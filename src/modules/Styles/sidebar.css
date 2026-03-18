@@ -11,7 +11,9 @@
   -moz-user-select: none;
   -ms-user-select: none;
 }
-
+.hidden {
+  visibility: hidden;
+}
 #sidebar-utility {
   display: flex;
   flex-direction: column;

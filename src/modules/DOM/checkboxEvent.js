@@ -1,4 +1,4 @@
-import { editToDoCheckListItems } from "../updateToDo.js";
+import { editCheckListCheckbox } from "../updateToDo.js";
 import {State} from './mainPage.js'
 
 export function addEventToCheckbox() {
@@ -7,7 +7,7 @@ export function addEventToCheckbox() {
   );
   allCheckboxInputs.forEach((element) =>
     element.addEventListener("click", () => {
-      editToDoCheckListItems( 
+      editCheckListCheckbox( 
         State.currentProject.id,
         element.dataset.taskid,
         element.parentElement.parentElement.id,

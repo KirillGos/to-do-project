@@ -8,17 +8,17 @@ export const sideBarTemplate = `
             <span id="sidebar-create-todo-label">Create Task</span>
             </div>
 
-            <div id="sidebar-today" class="effect1">
+            <div id="sidebar-today" class="effect1 hidden">
             <span id="sidebar-today-icon">⭐</span>
             <span id="sidebar-taday-label">Today</span>
         </div>
 
-        <div id="sidebar-search" " class="effect1">
+        <div id="sidebar-search" " class="effect1 hidden">
             <span id= "sidebar-search-icon">🔍</span>
             <span id="sidebar-search-label">Search</span>
             </div>
 
-        <div id="sidebar-upcoming" class="effect1"    >
+        <div id="sidebar-upcoming" class="effect1 hidden"    >
         <span id="sidebar-upcoming-icon">🧮</span>
             <span id="sidebar-upcoming-label">Upcoming</span>
         </div>

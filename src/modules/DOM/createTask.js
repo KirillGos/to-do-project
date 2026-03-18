@@ -5,8 +5,9 @@ import { mainContent, State } from "./mainPage";
 import { createTaskTemplate } from "./HTML Modules/createTaskTemplate";
 import { renderCheckList } from "./renderChecklist";
 import { renderProject } from "./createProject";
+import { checkListTemplate, createChecklistPage } from "./HTML Modules/createCheckList";
 
-class CheckList {
+export class CheckList {
   static checkList = [];
   constructor(id, title, status = false) {
     this.id = id;
@@ -19,9 +20,7 @@ class CheckList {
   }
 }
 
-function createTask() {
-  const createCheckListBtn = document.getElementById("add-checklist-btn");
-
+function createTask(selectedProjectId = "1") {
   const projectSelect = document.getElementById("select-project");
 
   const projects = Project.getProjects();
@@ -35,17 +34,24 @@ function createTask() {
       `,
     );
   });
-
-  createCheckListBtn.addEventListener("click", createCheckListItem);
-  const checkListInput = document.getElementById("create-checklist-input");
-  checkListInput.addEventListener('keydown', (e) => {
-    if(e.key == 'Enter') {
-      createCheckListItem();
-    }
-  })
+  // const selectedOption = document.getElementById(selectedProjectId);
+  // selectedOption.selected;
+  // console.log(selectedOption)
+  addEventToChecklistForm();
 
   const addTodoBtn = document.getElementById("add-task-btn");
   addTodoBtn.addEventListener("click", handleClick);
+}
+
+export function addEventToChecklistForm() {
+  const createCheckListBtn = document.getElementById("add-checklist-btn");
+  createCheckListBtn.addEventListener("click", createCheckListItem);
+  const checkListInput = document.getElementById("create-checklist-input");
+  checkListInput.addEventListener("keydown", (e) => {
+    if (e.key == "Enter") {
+      createCheckListItem();
+    }
+  });
 }
 
 function handleClick() {
@@ -71,10 +77,10 @@ function handleClick() {
   renderTask(selectedProjectId, todo.id);
 }
 
-export function createTaskDom() {
+export function createTaskDom(selectedProjectId) {
   State.currentTab = "Create task";
   mainContent(createTaskTemplate);
-  createTask();
+  createTask(selectedProjectId);
 }
 
 function createCheckListItem() {
@@ -145,7 +151,9 @@ export function renderTask(projectId, taskId) {
       </div>
     </div>
 
-    <div id="create-checklist-item" class="create-new-cheklist">
+    <div id="create-checklist-item" class="create-new-cheklist"
+    data-taskid="${todoItem.id}"
+    >
       Create a checklist item.
     </div>
 `;
@@ -156,8 +164,8 @@ export function renderTask(projectId, taskId) {
     renderProject(projectId);
   });
   const createNewTodoBtn = document.getElementById("create-checklist-item");
-  createNewTodoBtn.addEventListener("click", () => {
-    console.log("works");
+  createNewTodoBtn.addEventListener("click", (e) => {
+    createChecklistPage(todoItem.id);
   });
   const checkListContainer = document.getElementById(
     "checklist-items-container",
