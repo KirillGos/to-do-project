@@ -6,6 +6,8 @@ import { renderTask } from "./createTask.js";
 import { createProjectTemplate } from "./HTML Modules/createProjectTemplate.js";
 import { categorizeProjects } from "./categorizeProjects.js";
 import { renderCheckList } from "./renderChecklist.js";
+import { addEventToDeleteCheckbox } from "./deleteCheckbox.js";
+import { addEventToCheckbox } from "./checkboxEvent.js";
 
 export function createProjectDom() {
   State.currentTab = "Create a project";
@@ -59,6 +61,7 @@ export function displayProjectsSidebar() {
 }
 
 export function renderProject(id) {
+  console.log("render project worked");
   const project = Project.getProjects()[findProject(id)];
   State.currentProject = project;
 
@@ -109,6 +112,7 @@ export function renderProject(id) {
 }
 
 export function renderTasks(project) {
+  console.log("render tasks rendered");
   const taskContainer = document.getElementById("todo-container");
   taskContainer.innerHTML = "";
   project.list.forEach((task) => {
@@ -129,7 +133,8 @@ export function renderTasks(project) {
       .childNodes[3];
     renderCheckList(task.checkLists, checkListContainer);
   });
-
+  addEventToDeleteCheckbox();
+  addEventToCheckbox();
   const allTaskUtilityBtns = document.querySelectorAll(".task-utility");
   allTaskUtilityBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -137,4 +142,3 @@ export function renderTasks(project) {
     });
   });
 }
-

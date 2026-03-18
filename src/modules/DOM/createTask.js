@@ -5,7 +5,12 @@ import { mainContent, State } from "./mainPage";
 import { createTaskTemplate } from "./HTML Modules/createTaskTemplate";
 import { renderCheckList } from "./renderChecklist";
 import { renderProject } from "./createProject";
-import { checkListTemplate, createChecklistPage } from "./HTML Modules/createCheckList";
+import {
+  checkListTemplate,
+  createChecklistPage,
+} from "./HTML Modules/createCheckList";
+import { addEventToDeleteCheckbox } from "./deleteCheckbox";
+import { addEventToCheckbox } from "./checkboxEvent";
 
 export class CheckList {
   static checkList = [];
@@ -116,6 +121,7 @@ export function renderCheckListSimple(taskChecklist) {
 }
 
 export function renderTask(projectId, taskId) {
+  console.log("render task worked");
   const projectObject = find(projectId, taskId);
   const todoItem = projectObject.project.list[projectObject.toDoIndex];
   State.currentTask = todoItem;
@@ -172,4 +178,6 @@ export function renderTask(projectId, taskId) {
   );
 
   renderCheckList(todoItem.checkLists, checkListContainer);
+  addEventToDeleteCheckbox();
+  addEventToCheckbox();
 }

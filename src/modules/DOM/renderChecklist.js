@@ -19,7 +19,4 @@ export function renderCheckList(checkList, checkListContainer) {
   if (checkListContainer.childElementCount == 0) {
     checkListContainer.innerHTML = `<span style='color=rgba(97, 87, 87, 0.43);'>No checklist items here. Go to the task to create checklist items</span>`;
   }
-
-  addEventToDeleteCheckbox();
-  addEventToCheckbox();
 }
